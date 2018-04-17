@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     EditText editTextUser;
     EditText editTextPassword;
     ImageButton btnHelp;
-    AlertDialog alertDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +26,6 @@ public class MainActivity extends AppCompatActivity {
         btnHelp = findViewById(R.id.btnHelp);
         editTextUser = findViewById(R.id.editTextUser);
         editTextPassword = findViewById(R.id.editTextPassword);
-        alertDialog = createDialogoRegister();
 
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override

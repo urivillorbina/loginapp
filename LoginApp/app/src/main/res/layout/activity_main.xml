@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/background"
+    tools:context="urivil.loginapp.MainActivity">
+
+    <EditText
+        android:id="@+id/editTextUser"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="30dp"
+        android:hint="@string/usuarioMain"
+        android:inputType="number"
+        android:maxLength="5"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageLogo" />
+
+    <EditText
+        android:id="@+id/editTextPassword"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="30dp"
+        android:hint="@string/passwordMain"
+        android:inputType="numberPassword"
+        android:maxLength="8"
+
+        app:layout_constraintEnd_toEndOf="@+id/editTextUser"
+        app:layout_constraintStart_toStartOf="@+id/editTextUser"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUser" />
+
+
+    <ImageView
+        android:id="@+id/imageLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:contentDescription="@android:string/untitled"
+        android:layout_marginTop="30dp"
+        app:layout_constraintEnd_toEndOf="@+id/editTextUser"
+        app:layout_constraintStart_toStartOf="@+id/editTextUser"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/internet" />
+
+    <Button
+        android:id="@+id/buttonAccept"
+        android:layout_width="120dp"
+        android:layout_height="45dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@color/btnMain"
+        android:text="@string/mainBtn"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <ImageButton
+        android:id="@+id/btnHelp"
+        android:contentDescription="@string/btnhelp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:srcCompat="@drawable/accountplus" />
+
+</android.support.constraint.ConstraintLayout>
+

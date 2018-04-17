@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">LoginApp</string>
+    <string name="usuarioMain">Usuario</string>
+    <string name="passwordMain">Password</string>
+    <string name="mainBtn">Login</string>
+    <string name="btnhelp">Help</string>
+
+    <string name="textViewRegister">Crea una cuenta para acceder a la aplicación</string>
+    <string name="buttonRegister">Registrar</string>
+</resources>

@@ -51,7 +51,7 @@
         app:srcCompat="@drawable/internet" />
 
     <Button
-        android:id="@+id/buttonAccept"
+        android:id="@+id/buttonLogin"
         android:layout_width="120dp"
         android:layout_height="45dp"
         android:layout_marginBottom="16dp"

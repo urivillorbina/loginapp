@@ -1,13 +1,10 @@
 package urivil.loginapp.entidades;
 
-import android.content.Intent;
-import android.database.sqlite.SQLiteOpenHelper;
-
 /**
  * Created by Oriol Villorbina on 18/04/2018.
  */
 
-public class Usuario{
+public class Usuario {
 
     //private Integer id;
     private String codigo;
@@ -16,7 +13,7 @@ public class Usuario{
 
 //Estructura de la tabla
 
-    public Usuario(Integer id, String codigo, String password) {
+    public Usuario(String codigo, String password) {
         //this.id = id;
         this.codigo = codigo;
         this.password = password;

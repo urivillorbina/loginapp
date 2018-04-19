@@ -34,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         //ConexionSQLiteHelper conn = new ConexionSQLiteHelper(this, "bd_usuarios", null, 1);
 
         btnLogin = findViewById(R.id.buttonLogin);
@@ -52,9 +53,15 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 //Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
                 comprobarUsuarios();
+
+                if (editTextUser.equals(editTextUserReg) & (editTextPassword.equals(editTextPassReg))){
+                    transicionBienvenidaActivity();
+                    Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Usuario o Password Incorrectos", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -112,12 +119,12 @@ public class MainActivity extends AppCompatActivity {
 
         SQLiteDatabase db = conn.getReadableDatabase();
 
-        String[] parametros = {editTextUser.getText().toString(), editTextPassword.getText().toString()};
+        String[] parametros = {editTextUser.getText().toString(), /*editTextPassword.getText().toString()*/};
         String[] campos = {Utilidades.CAMPO_CODIGO, Utilidades.CAMPO_PASSWORD};
 
         try {
             Cursor cursor = db.query(Utilidades.TABLA_USUARIO, campos, Utilidades.CAMPO_CODIGO + "=?", parametros, null, null, null);
-            cursor.moveToNext();
+            cursor.moveToFirst();
             editTextUser.setText(cursor.getString(0));
             editTextPassword.setText(cursor.getString(1));
             //Toast.makeText(getApplicationContext(), "Login correcto", Toast.LENGTH_SHORT).show();
@@ -129,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
             editTextUser.setText("");
             editTextPassword.setText("");
         }
-
     }
 
     public void clearRegistro() {

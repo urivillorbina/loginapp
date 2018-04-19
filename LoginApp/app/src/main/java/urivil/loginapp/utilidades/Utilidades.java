@@ -9,8 +9,7 @@ public class Utilidades {
     public static final String CAMPO_PASSWORD = "password";
 
 
-    public static final String CREAR_TABLA_USUARIO = "CREATE TABLE " +
-            " " + TABLA_USUARIO + " ( "
-            + CAMPO_CODIGO + " INTEGER, " + CAMPO_PASSWORD + " INTEGER) ";
+    public static final String CREAR_TABLA_USUARIO = "CREATE TABLE "+ TABLA_USUARIO +" ("
+            +CAMPO_CODIGO+ " INTEGER, " +CAMPO_PASSWORD+ " INTEGER) ";
 
 }

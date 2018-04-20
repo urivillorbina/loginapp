@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         btnHelp = findViewById(R.id.btnHelp);
         editTextUser = findViewById(R.id.editTextUser);
         editTextPassword = findViewById(R.id.editTextPassword);
+        editTextUserReg = findViewById(R.id.editTextRegistrarUsuario);
+        editTextPassReg = findViewById(R.id.editTextRegistrarPassword);
 
 
         btnHelp.setOnClickListener(new View.OnClickListener() {
@@ -54,9 +56,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
-                comprobarUsuarios();
+                //String pass = Utilidades.CAMPO_PASSWORD;
+                //String campo = Utilidades.CAMPO_CODIGO;
+                //comprobarUsuarios();
+                //editTextUserReg = v.findViewById(R.id.editTextRegistrarUsuario);
+                //editTextPassReg = v.findViewById(R.id.editTextRegistrarPassword);
 
-                if (editTextUser.equals(editTextUserReg) & (editTextPassword.equals(editTextPassReg))){
+
+                if (editTextPassword.getText().toString().equalsIgnoreCase(comprobarUsuarios()) /*&& (editTextPassword.getText().toString().equalsIgnoreCase(editTextPassReg.getText().toString()))*/){
                     transicionBienvenidaActivity();
                     Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
                 }else {
@@ -105,37 +112,41 @@ public class MainActivity extends AppCompatActivity {
             SQLiteDatabase db = conn.getWritableDatabase();
 
             ContentValues values = new ContentValues();
+
             values.put(Utilidades.CAMPO_CODIGO, editTextUserReg.getText().toString());
             values.put(Utilidades.CAMPO_PASSWORD, editTextPassReg.getText().toString());
 
-            //Long idResultante = db.insert(Utilidades.TABLA_USUARIO, Utilidades.CAMPO_CODIGO, values);
+            Long idResultante = db.insert(Utilidades.TABLA_USUARIO, Utilidades.CAMPO_CODIGO, values);
 
-            Toast.makeText(getApplicationContext(), "Registro Completado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), (idResultante + "Registro Completado"), Toast.LENGTH_SHORT).show();
         }
     }
 
-    public void comprobarUsuarios() {
+    public String comprobarUsuarios() {
         ConexionSQLiteHelper conn = new ConexionSQLiteHelper(this, "bd_usuarios", null, 1);
+
+        String pass = "";
 
         SQLiteDatabase db = conn.getReadableDatabase();
 
-        String[] parametros = {editTextUser.getText().toString(), /*editTextPassword.getText().toString()*/};
-        String[] campos = {Utilidades.CAMPO_CODIGO, Utilidades.CAMPO_PASSWORD};
+        String[] parametros = {editTextUser.getText().toString()/*, editTextPassword.getText().toString()*/};
+        String[] campos = {/*Utilidades.CAMPO_CODIGO ,*/ Utilidades.CAMPO_PASSWORD};
 
         try {
             Cursor cursor = db.query(Utilidades.TABLA_USUARIO, campos, Utilidades.CAMPO_CODIGO + "=?", parametros, null, null, null);
             cursor.moveToFirst();
-            editTextUser.setText(cursor.getString(0));
-            editTextPassword.setText(cursor.getString(1));
-            //Toast.makeText(getApplicationContext(), "Login correcto", Toast.LENGTH_SHORT).show();
-            clearRegistro();
+            pass = (cursor.getString(0));
+            //editTextPassword.setText(cursor.getString(1));
+            //Toast.makeText(getApplicationContext(), "-", Toast.LENGTH_SHORT).show();
+            //clearRegistro();
             cursor.close();
 
         } catch (Exception e) {
-            //Toast.makeText(getApplicationContext(), "Nombre o Password incorrectos", Toast.LENGTH_SHORT).show();
-            editTextUser.setText("");
-            editTextPassword.setText("");
+            //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+            //editTextUser.setText("");
+            //editTextPassword.setText("");
         }
+        return pass;
     }
 
     public void clearRegistro() {

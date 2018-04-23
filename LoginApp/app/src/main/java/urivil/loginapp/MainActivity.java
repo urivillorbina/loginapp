@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -61,9 +62,10 @@ public class MainActivity extends AppCompatActivity {
 
                 if (editTextPassword.getText().toString().equalsIgnoreCase(comprobarUsuarios())) {
                     transicionBienvenidaActivity();
-                    Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Bienvenido, " + editTextUser.getText().toString(), Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getApplicationContext(), "Usuario o Password Incorrectos", Toast.LENGTH_SHORT).show();
+                    Snackbar.make(v, "Usuario o Password incorrectos", Snackbar.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "Usuario o Password Incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -86,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 registrarUsuarios();
                 clearRegistro();
+                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -111,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
 
             Long idResultante = db.insert(Utilidades.TABLA_USUARIO, Utilidades.CAMPO_CODIGO, values);
 
-            Toast.makeText(getApplicationContext(), (idResultante + "Registro Completado"), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), (/*idResultante + */"Registro Completado"), Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -132,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
 
         } catch (Exception ignored) {
-            
+
         }
         return pass;
     }

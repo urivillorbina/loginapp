@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:theme="@android:style/Theme.Light.NoTitleBar"
-    android:background="@android:color/white"
     android:layout_margin="10dp"
+    android:background="@android:color/white"
+    android:orientation="vertical"
     android:padding="10dp"
-    android:orientation="vertical">
+    android:theme="@android:style/Theme.Light.NoTitleBar">
 
     <TextView
         android:id="@+id/textViewTitulo"
@@ -41,9 +40,11 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="20dp"
         android:ems="10"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         android:hint="@string/usuarioMain"
-        android:maxLength="5"
         android:inputType="number"
+        android:maxLength="5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
@@ -57,8 +58,8 @@
         android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/passwordMain"
-        android:maxLength="8"
         android:inputType="numberPassword"
+        android:maxLength="8"
         app:layout_constraintEnd_toEndOf="@+id/editTextRegistrarUsuario"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/editTextRegistrarUsuario"

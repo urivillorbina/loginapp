@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -49,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         editTextPassReg = findViewById(R.id.editTextRegistrarPassword);
 
 
+
         btnHelp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -63,9 +63,10 @@ public class MainActivity extends AppCompatActivity {
                 if (editTextPassword.getText().toString().equalsIgnoreCase(comprobarUsuarios())) {
                     transicionBienvenidaActivity();
                     Toast.makeText(getApplicationContext(), "Bienvenido, " + editTextUser.getText().toString(), Toast.LENGTH_SHORT).show();
+                    clearLogin();
                 } else {
-                    Snackbar.make(v, "Usuario o Password incorrectos", Snackbar.LENGTH_LONG).show();
-                    //Toast.makeText(getApplicationContext(), "Usuario o Password Incorrectos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Usuario o Password Incorrectos", Toast.LENGTH_SHORT).show();
+                    clearLogin();
                 }
             }
         });
@@ -86,10 +87,16 @@ public class MainActivity extends AppCompatActivity {
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                registrarUsuarios();
-                clearRegistro();
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-                startActivity(intent);
+
+                if (editTextPassReg.length() < 8) {
+                    Toast.makeText(getApplicationContext(), "Introduzca su DNI (8 carácteres)", Toast.LENGTH_SHORT).show();
+                    clearPassReg();
+                } else {
+                    registrarUsuarios();
+                    clearRegistro();
+                    btnRegistrar.setEnabled(false);
+                }
+
             }
         });
 
@@ -99,25 +106,20 @@ public class MainActivity extends AppCompatActivity {
 
     public void registrarUsuarios() {
 
-        if (editTextPassReg.length() < 8) {
+        ConexionSQLiteHelper conn = new ConexionSQLiteHelper(this, "bd_usuarios", null, 1);
 
-            Toast.makeText(getApplicationContext(), "Introduzca su DNI (8 carácteres)", Toast.LENGTH_SHORT).show();
+        SQLiteDatabase db = conn.getWritableDatabase();
 
-        } else {
-            ConexionSQLiteHelper conn = new ConexionSQLiteHelper(this, "bd_usuarios", null, 1);
+        ContentValues values = new ContentValues();
 
-            SQLiteDatabase db = conn.getWritableDatabase();
+        values.put(Utilidades.CAMPO_CODIGO, editTextUserReg.getText().toString());
+        values.put(Utilidades.CAMPO_PASSWORD, editTextPassReg.getText().toString());
 
-            ContentValues values = new ContentValues();
+        Long idResultante = db.insert(Utilidades.TABLA_USUARIO, Utilidades.CAMPO_CODIGO, values);
 
-            values.put(Utilidades.CAMPO_CODIGO, editTextUserReg.getText().toString());
-            values.put(Utilidades.CAMPO_PASSWORD, editTextPassReg.getText().toString());
-
-            Long idResultante = db.insert(Utilidades.TABLA_USUARIO, Utilidades.CAMPO_CODIGO, values);
-
-            Toast.makeText(getApplicationContext(), (/*idResultante + */"Registro Completado"), Toast.LENGTH_SHORT).show();
-        }
+        Toast.makeText(getApplicationContext(), (/*idResultante + */"Registro Completado"), Toast.LENGTH_SHORT).show();
     }
+
 
     public String comprobarUsuarios() {
         ConexionSQLiteHelper conn = new ConexionSQLiteHelper(this, "bd_usuarios", null, 1);
@@ -147,13 +149,20 @@ public class MainActivity extends AppCompatActivity {
         editTextPassReg.setText("");
         editTextUser.setText("");
         editTextPassword.setText("");
+    }
 
+    public void clearPassReg(){
+        editTextPassReg.setText("");
+    }
+    public void clearLogin(){
+        editTextUser.setText("");
+        editTextPassword.setText("");
     }
 
     public void transicionBienvenidaActivity() {
+
         Intent intent = new Intent(MainActivity.this, BienvenidaActivity.class);
         startActivity(intent);
 
     }
-
 }

@@ -14,6 +14,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.facebook.stetho.Stetho;
+
 import urivil.loginapp.entidades.ConexionSQLiteHelper;
 import urivil.loginapp.utilidades.Utilidades;
 
@@ -32,10 +34,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Stetho.initializeWithDefaults(this);
         setContentView(R.layout.activity_main);
 
-
-        //ConexionSQLiteHelper conn = new ConexionSQLiteHelper(this, "bd_usuarios", null, 1);
+        //Utilidad de Chrome para comprobar DB
+        //chrome://inspect/#devices
 
         btnLogin = findViewById(R.id.buttonLogin);
         btnHelp = findViewById(R.id.btnHelp);
@@ -55,18 +58,11 @@ public class MainActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Toast.makeText(MainActivity.this, "1", Toast.LENGTH_SHORT).show();
-                //String pass = Utilidades.CAMPO_PASSWORD;
-                //String campo = Utilidades.CAMPO_CODIGO;
-                //comprobarUsuarios();
-                //editTextUserReg = v.findViewById(R.id.editTextRegistrarUsuario);
-                //editTextPassReg = v.findViewById(R.id.editTextRegistrarPassword);
 
-
-                if (editTextPassword.getText().toString().equalsIgnoreCase(comprobarUsuarios()) /*&& (editTextPassword.getText().toString().equalsIgnoreCase(editTextPassReg.getText().toString()))*/){
+                if (editTextPassword.getText().toString().equalsIgnoreCase(comprobarUsuarios())) {
                     transicionBienvenidaActivity();
                     Toast.makeText(getApplicationContext(), "Bienvenido", Toast.LENGTH_SHORT).show();
-                }else {
+                } else {
                     Toast.makeText(getApplicationContext(), "Usuario o Password Incorrectos", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -75,9 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public AlertDialog createDialogoRegister() {
-
-        //String textName = editTextUser.getText().toString();
-        //String textPassword = editTextPassword.getText().toString();
 
         final AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
@@ -129,22 +122,17 @@ public class MainActivity extends AppCompatActivity {
 
         SQLiteDatabase db = conn.getReadableDatabase();
 
-        String[] parametros = {editTextUser.getText().toString()/*, editTextPassword.getText().toString()*/};
-        String[] campos = {/*Utilidades.CAMPO_CODIGO ,*/ Utilidades.CAMPO_PASSWORD};
+        String[] parametros = {editTextUser.getText().toString()};
+        String[] campos = {Utilidades.CAMPO_PASSWORD};
 
         try {
             Cursor cursor = db.query(Utilidades.TABLA_USUARIO, campos, Utilidades.CAMPO_CODIGO + "=?", parametros, null, null, null);
             cursor.moveToFirst();
             pass = (cursor.getString(0));
-            //editTextPassword.setText(cursor.getString(1));
-            //Toast.makeText(getApplicationContext(), "-", Toast.LENGTH_SHORT).show();
-            //clearRegistro();
             cursor.close();
 
-        } catch (Exception e) {
-            //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
-            //editTextUser.setText("");
-            //editTextPassword.setText("");
+        } catch (Exception ignored) {
+            
         }
         return pass;
     }
